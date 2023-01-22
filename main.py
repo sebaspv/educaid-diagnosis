@@ -58,9 +58,9 @@ def explain(subject: str, condition: str, interest: str) -> dict:
     return completion
 
 @app.post("/diagnosis")
-def diagnosis(answers: list) -> str:
+def diagnosis(answers: list) -> dict:
     description = patient_description(answers)
     classification = zeroshot(description,
     candidate_labels=["autism", "adhd", "dyslexia", "schizophrenia", "nothing"],
     )
-    return str({"diagnosis": classification["sequence"].capitalize(), "condition": classification["labels"][0]})
+    return {"diagnosis": classification["sequence"], "condition": classification["labels"][0]}
